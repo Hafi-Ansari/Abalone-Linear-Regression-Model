@@ -54,7 +54,7 @@ num_iterations = 1000
 train_errors = []
 
 #Gradient Descent Magic
-print("MEAN SQUARED ERROR FOR TRAINING SET EVERY 100 ITERATIONS:")
+print("MEAN SQUARED ERROR EVERY 100 ITERATIONS:\n")
 for i in range(num_iterations):
     #numpy dot function takes the dot product of weights of each feature
     y_pred = np.dot(X_train, weights) + bias
@@ -74,9 +74,16 @@ for i in range(num_iterations):
     weights = weights - learning_rate * weight_gradient
     bias = bias - learning_rate * bias_gradient
 
+    #prediction on test set
+    y_test_pred = np.dot(X_test, weights) + bias
+    test_error = y_test - y_test_pred
+    test_mse = np.mean(np.square(test_error))
+
     #logging error values
     if i % 50 == 0:
-        print(f"Iteration {i}, Mean Squared Error: {mean_squared_error}")
+        print(f"TRAINING SET:\tIteration {i}, Mean Squared Error: {mean_squared_error}")
+        print(f"TESTING SET:\tIteration {i}, Mean Squared Error: {test_mse}")
+        print(f"Weights: {weights}\n")
 
 print("\n\n")
 
@@ -98,4 +105,4 @@ test_mse = np.mean(np.square(test_error))
 
 print(f"MEAN SQUARED ERROR ON THE TEST SET USING FINAL WEIGHTS FROM TRAINING SET: {test_mse}")
 
-print(test_error)
+print(f"{test_error}")
